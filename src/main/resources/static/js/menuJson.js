@@ -1,0 +1,89 @@
+/*leftNav_id不可重复、以下属性名不可更改，否则页面要进行相应调整*/
+var leftNav = [{
+	"text": "学生管理",
+	"leftNav_id": "1",
+	"name": "学生列表",
+	"href": "/c/users/getStudnets?p=1&s=3"
+}, {
+	"text": "学生管理",
+	"leftNav_id": "2",
+	"name": "奖惩管理",
+	"href": "/c/users/getRecstuAll?p=1&s=3"
+}, {
+	"text": "学生管理",
+	"leftNav_id": "13",
+	"name": "角色管理",
+	"href": "html/roles.html"
+}, {
+	"text": "课程管理",
+	"leftNav_id": "24",
+	"name": "课程管理",
+	"href": "html/kecheng/index.html"
+}, {
+	"text": "消息管理",
+	"leftNav_id": "26",
+	"name": "消息管理",
+	"href": "html/messageList.html"
+}, {
+	"text": "活动管理",
+	"leftNav_id": "3",
+	"name": "活动管理",
+	"href": "html/activity.html"
+}, {
+	"text": "项目管理",
+	"leftNav_id": "4",
+	"name": "项目列表",
+	"href": "html/ItemsSys/index.html"
+}, {
+	"text": "项目管理",
+
+	"leftNav_id": "5",
+	"name": "项目团队",
+	"href": "html/ItemsSys/projectteam.html"
+}, {
+	"text": "项目管理",
+	"leftNav_id": "23",
+	"name": "项目检查",
+	"href": "html/ItemsSys/projectcheck.html"
+}, {
+	"text": "作业管理",
+	"leftNav_id": "6",
+	"name": "作业列表",
+	"href": "html/jobSys/jianchazuoye.html"
+}, {
+	"text": "作业管理",
+	"leftNav_id": "7",
+	"name": "作业发起",
+	"href": "html/jobSys/fabuzuoye.html"
+}, {
+	"text": "班级管理",
+	"leftNav_id": "10",
+	"name": "查看班级学员",
+	"href": "html/classSys/ClassViewAll.html"
+}, {
+	"text": "班级管理",
+	"leftNav_id": "12",
+	"name": "申请审核",
+	"href": "html/classSys/Auditing.html"
+}, {
+	"text": "班级管理",
+	"leftNav_id": "19",
+	"name": "开班",
+	"href": "html/classSys/StartClass.html"
+}, {
+	"text": "考试管理",
+	"leftNav_id": "20",
+	"name": "考试管理",
+	"href": "html/jobSys/examination/newExam.html"
+}, {
+	"text": "考勤统计管理",
+	"leftNav_id": "14",
+	"name": "考勤统计记录",
+	"href": "html/kaoqing.html"
+}, {
+	"text": "系统",
+	"leftNav_id": "27",
+	"name": "数据库管理",
+	"href": "html/sql.html"
+
+}]

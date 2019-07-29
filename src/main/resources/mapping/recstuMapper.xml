@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tx.dao.RecstuDao">
+    <resultMap id="recstu" type="com.tx.pojo.Recstu" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="stuname" property="stuname" jdbcType="VARCHAR" />
+        <result column="createby" property="createby" jdbcType="VARCHAR" />
+        <result column="createData" property="createData" jdbcType="DATE" />
+        <result column="des" property="des" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="querbyid" parameterType="java.lang.String" resultMap="recstu">
+        select tr.`id`,tr.`name`,tst.`name`  AS stuname,tr.`createby`,tr.`createdate`,tr.`des` from `t_record` as tr
+            join `t_student` as tst
+                 on tst.`code`=tr.`stucode`
+        where tr.`stucode`=#{stucode,jdbcType=VARCHAR}
+    </select>
+    <select id="querAll" resultMap="recstu">
+        select tr.`id`,tr.`name`,tst.`name`  AS stuname,tr.`createby`,tr.`createdate`,tr.`des` from `t_record` as tr
+            join `t_student` as tst
+                 on tst.`code`=tr.`stucode`
+    </select>
+
+    <select id="queryByin" resultMap="recstu">
+        select tr.`id`,tr.`name`,tst.`name`  AS stuname,tr.`createby`,tr.`createdate`,tr.`des` from `t_record` as tr
+            join `t_student` as tst
+                 on tst.`code`=tr.`stucode`
+        where 1=1
+        <if test="jc != null">
+          AND tr.`name` like '%${jc}%'
+        </if>
+        <if test="stuname != null">
+            AND tst.`name` like '%${stuname}%'
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>奖惩管理</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/js/jquery-2.1.1.min.js" ></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/vue.js"></script>
+</head>
+<body>
+    <p class="text-center"><h1>奖惩管理</h1></p>
+    <form class="form-inline" action="/c/users/getbyi" method="post">
+        <div class="form-group">
+            <label for="exampleInputName2">奖惩：</label>
+            <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe" name="jc" th:value="${jc}">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail2">学生姓名</label>
+            <input type="text" class="form-control" id="exampleInputEmail2" placeholder="请输入姓名" name="stuname" th:value="${stuname}">
+        </div>
+        <button type="submit" class="btn btn-info">查询</button>&nbsp;&nbsp;
+    </form>
+    <br>
+    <button class="btn btn-primary" id="openDialog">添加</button><br>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <td>序号</td>
+            <td>奖惩</td>
+            <td>学生姓名</td>
+            <td>创建人</td>
+            <td>创建时间</td>
+            <td>操作</td>
+        </tr>
+        </thead>
+        <tbody  th:remove="${pageinfo.list.size()==0?'none':'all-but-first'}">
+        <tr th:each="temp,iter:${pageinfo.list}">
+            <td th:text="${iter.count}"></td>
+            <td th:text="${temp.name}"></td>
+            <td th:text="${temp.stuname}"></td>
+            <td th:text="${temp.createby}"></td>
+            <td th:text="${#dates.format(temp.createData,'yyyy-MM-dd')}"></td>
+            <td>
+                <a th:onclick="goupMt([[${temp.id}]])" >修改</a>&nbsp;&nbsp;&nbsp;
+                <a onclick="return confirm('确定要删除吗？')" th:href="|/c/users/remove?id=${temp.id}|" >删除</a>
+            </td>
+        </tr>
+        <tr>
+            <th colspan="10">没有找到数据！</th>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td>
+                当前页：[[${pageinfo.pageNum}]]&nbsp;/&nbsp;[[${pageinfo.pages}]]
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                共：[[${pageinfo.pages}]]&nbsp;页
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/c/users/getRecstuAll?p=1&s=3">首页</a>&nbsp;&nbsp;
+                <a th:href="|/c/users/getRecstuAll?p=${pageinfo.hasPreviousPage?pageinfo.prePage:1}&s=3|">上一页</a>&nbsp;&nbsp;
+                <a th:href="|/c/users/getRecstuAll?p=${pageinfo.hasNextPage?pageinfo.nextPage:pageinfo.lastPage}&s=3|">下一页</a>&nbsp;&nbsp;
+                <a th:href="|/c/users/getRecstuAll?p=${pageinfo.lastPage}&s=3|">末页</a>&nbsp;&nbsp;
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+
+
+        <!--搭建模态框[新增]-->
+        <div id="myDialog" class="modal fade" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">新增奖惩</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/c/users/addRecinfo">
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">奖惩</label>
+                                <input type="text" class="form-control" name="jc">
+                            </div>
+                            <div class="form-group">
+                                <select id="select1" name="stucode" >
+                                    <option value="0">--请选择奖惩对象--</option>
+                                    <option th:each="temp1,iter1:${list}" th:value="${temp1.code}">[[${temp1.name}]]</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">描述</label>
+                                <input type="text" class="form-control" name="des" >
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button onclick="return confirm('确定要提交数据吗？')"  type="submit" class="btn btn-primary">保存</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--搭建修改的模态框-->
+
+    <div id="myDialog1" class="modal fade" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">奖惩修改</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="/c/users/updRecinfo" method="post">
+                        <input type="hidden" name="id">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">奖惩</label>
+                            <input type="text" class="form-control" name="jc">
+                        </div>
+                        <div class="form-group">
+                            <select id="select2" name="stucode" >
+                                <option value="0">--请选择奖惩对象--</option>
+                                <option th:each="temp1,iter1:${list}" th:value="${temp1.code}">[[${temp1.name}]]</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">描述</label>
+                            <input type="text" class="form-control" name="des" >
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button onclick="return confirm('确定要提交数据吗？')"  type="submit" class="btn btn-primary">修改</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    $("#openDialog").click(function(){
+        $("#myDialog").modal();
+    });
+
+    function goupMt(id) {
+        $("#myDialog1").modal();
+        $.getJSON("/api/getRecor?id="+id,function (data) {
+            $("[name=id]").val(data.id);
+            $("[name=jc]").val(data.name);
+            $("[name=des]").val(data.des);
+        })
+    }
+</script>
+</html>
