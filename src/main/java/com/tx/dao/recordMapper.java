@@ -14,4 +14,6 @@ public interface recordMapper {
     int updateByPrimaryKeySelective(record record);
 
     int updateByPrimaryKey(record record);
+
+
 }
